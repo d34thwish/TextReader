@@ -5,12 +5,15 @@ import time
 #this is to calculate how much it takes to analize the file
 
 start = time.perf_counter()
+#here "file_path" doesnt have a value yet so we will assign it now
+file_path = sys.argv[1]
+file = open(file_path, 'r')
+
 
 def read_file(file_path):
     try:
-        with open(file_path, 'r') as file:
-            for line in file:
-                print(line.strip())
+        for line in file:
+            print(line.strip())
     except FileNotFoundError:
         print(f"The file at {file_path} was not found.")
     except PermissionError:
@@ -26,13 +29,12 @@ def read_file(file_path):
 
 def count_line_and_words(file_path):
     try:
-        with open(file_path, 'r') as file:
-            lines = file.readlines()
-            line_count = len(lines)
-            # count words by splitting each line (file is already read into `lines`)
-            word_count = sum(len(line.split()) for line in lines)
-            print(f"Lines: {line_count}, Words: {word_count}")
-            #here we use "line.split()" to split each line into words and count them.
+        lines = file.readlines()
+        line_count = len(lines)
+        # count words by splitting each line (file is already read into `lines`)
+        word_count = sum(len(line.split()) for line in lines)
+        print(f"Lines: {line_count}, Words: {word_count}")
+        #here we use "line.split()" to split each line into words and count them.
     except FileNotFoundError:
         print(f"The file at {file_path} was not found.")
     except PermissionError:
@@ -77,12 +79,11 @@ def count_line_and_words(file_path):
 
 def find_longest_line(file_path):
     try:
-        with open(file_path, 'r') as file:
-            longest_line = ""
-            for line in file:
-                if len(line) > len(longest_line):
-                    longest_line = line
-            print(f"Longest line: {longest_line.strip()}")
+        longest_line = ""
+        for line in file:
+            if len(line) > len(longest_line):
+                longest_line = line
+        print(f"Longest line: {longest_line.strip()}")
     except FileNotFoundError:
         print(f"The file at {file_path} was not found.")
     except Exception as e:
@@ -97,12 +98,11 @@ def top_words(file_path, top_n):
         top_n = sys.argv[3]
         top_n = int(top_n)
         print(f"top_n: {top_n}")
-        with open(file_path, 'r') as file:
-            text = file.read()
-            words = text.split()
-            words_count = Counter(words)
-            most_common = words_count.most_common(top_n)
-            print(f"Top {top_n} words: {most_common}")
+        text = file.read()
+        words = text.split()
+        words_count = Counter(words)
+        most_common = words_count.most_common(top_n)
+        print(f"Top {top_n} words: {most_common}")
     except FileNotFoundError:
         print(f"The file at {file_path} was not found.")
     except ValueError:
@@ -133,4 +133,4 @@ if __name__ == "__main__":
         print(f"Unknown action: {action}")
 
 
-print(f"Execution time: {time.perf_counter() - start} seconds")
+print(f"Execution time: {time.perf_counter() - start:.3f} seconds")
