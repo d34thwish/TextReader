@@ -1,4 +1,5 @@
 
+from pdb import main
 import sys
 import time
 from collections import Counter
@@ -7,7 +8,6 @@ counter = Counter()
 
 #this is to calculate how much it takes to analize the file
 
-start = time.perf_counter()
 #here "file_path" doesnt have a value yet so we will assign it now
 file_path = sys.argv[1]
 file = open(file_path, 'r')
@@ -80,6 +80,7 @@ def top_words(file_path, top_n):
 
 if __name__ == "__main__":
     
+    start = time.perf_counter()
 
     if len(sys.argv) < 2:
         print("Usage: python3 main.py <file_path> [action]")
@@ -100,5 +101,4 @@ if __name__ == "__main__":
     else:
         print(f"Unknown action: {action}")
 
-
-print(f"Execution time: {time.perf_counter() - start:.3f} seconds")
+    print(f"Execution time: {time.perf_counter() - start:.3f} seconds")
