@@ -95,8 +95,7 @@ if __name__ == "__main__":
     elif action == "longest":
         find_longest_line(file_path)
     elif action == "top":
-        top_n = sys.argv[3]
-        top_n = int(top_n)
+        top_n = int(sys.argv[3])
         top_words(file_path, top_n)
     else:
         print(f"Unknown action: {action}")
