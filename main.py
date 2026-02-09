@@ -1,6 +1,9 @@
 
 import sys
 import time
+from collections import Counter
+
+counter = Counter()
 
 #this is to calculate how much it takes to analize the file
 
@@ -63,14 +66,11 @@ def find_longest_line(file_path):
 
 def top_words(file_path, top_n):
     
-    from collections import Counter
     try:
         print(f"top_n: {top_n}")
-        text = file.read()
-        words = text.split()
-        words_count = Counter(words)
-        most_common = words_count.most_common(top_n)
-        print(f"Top {top_n} words: {most_common}")
+        for line in file:
+            counter.update(line.split())
+        print(f"Top {top_n} words: {counter.most_common(top_n)}")
     except FileNotFoundError:
         print(f"The file is not there pal.")
     except ValueError:
