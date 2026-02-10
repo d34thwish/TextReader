@@ -1,3 +1,4 @@
+from argparse import ArgumentParser
 import sys
 import time
 from collections import Counter
@@ -25,22 +26,24 @@ def text_tool(file_path):
 
 
 if __name__ == "__main__":
-    
-
     start = time.perf_counter()
     
+    parser = ArgumentParser(description="Simple text analysis tool")
 
-    if len(sys.argv) < 2:
-        print("Usage: python3 main.py <file_path> [action]")
-        print("Actions: read (default), count, longest, top")
-        sys.exit(1)
+    parser.add_argument("file", help="Path to the file")
+    parser.add_argument("--count", action="store_true", help="Count lines and words")
+    parser.add_argument("--longest", action="store_true", help="Find the longest line")
+    parser.add_argument("--top", type=int, help="Show top N most common words")
 
-    file_path = sys.argv[1]
-    action = sys.argv[2] if len(sys.argv) > 2 else "read"
+    args = parser.parse_args()
+
+
+
+    file_path = args.file
 
     
 
-    if action == "read":
+    if not (args.count or args.longest or args.top):
         try:
             with open(file_path, encoding='utf-8') as file:
                 for line in file:
@@ -56,17 +59,11 @@ if __name__ == "__main__":
         if result is None:
             sys.exit(1)
         lines, words, longest, counter = result
-        if action == "count":
+        if args.count:
             print(f"Lines: {lines}, Words: {words}")
-        elif action == "longest":
+        elif args.longest:
             print(f"Longest line: {longest}")
-        elif action == "top":
-            try:
-                top_n = int(sys.argv[3])
-            except (IndexError, ValueError):
-                top_n = 5 
-            print(f"Top words: {counter.most_common(top_n)}")
         else:
-            print(f"Unknown action: {action}")
+            print(f"Top words: {counter.most_common(args.top)}")
 
     print(f"Execution time: {time.perf_counter() - start:.3f} seconds")
