@@ -67,7 +67,6 @@ This project was built as a learning exercise to practice:
 - word frequency analysis (`collections.Counter`)
 
 Some guidance was used during development as part of the learning process.  
-All code in this repository has been reviewed and understood by the author.
 
 ## License
 
